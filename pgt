@@ -248,7 +248,7 @@ print_proc() {
         done
         printf "\n"
     }
-    ret["next_p"]="$next_p"
+    ret_next_p="$next_p"
     return $print_it
 }
 
@@ -260,7 +260,7 @@ _print_tree(){
         [ "$pid" = "${pids##* }" ] && last=1
         print_proc "$pid" "$pre" "$print_it" "$last"
         next_print_it=$?
-        next_p="${ret["next_p"]}"
+        next_p="$ret_next_p"
         eval pt='${'pids_tree_$pid'[@]}'
         _print_tree "$pt" "$next_print_it" "$pre$next_p"
     done
@@ -291,7 +291,7 @@ kill_with_children() {
 
 main() {
     selected_pids=() all_pids=() top_parents=()
-    declare -A pinfo=() ps_info=() colors=() ret=()
+    declare -A pinfo=() ps_info=() colors=()
     proctree
     print_tree
 }
