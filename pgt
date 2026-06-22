@@ -322,7 +322,7 @@ _pgrep() {
     done
 }
 
-argopt="WRThIckKfxvinoya1C:p:u:U:g:G:P:s:t:F:O:w:"
+argopt="WRrThIckKfxvinoyaA1C:p:u:U:g:G:P:s:t:F:O:w:"
 args=("$@")
 pids=(0)
 fpid='pid'
@@ -330,7 +330,6 @@ fuser='user'
 pgrep_args=()
 options=()
 watch='false'
-threads=
 color='auto'
 wrap='auto'
 show_parents=1
@@ -345,7 +344,7 @@ while getopts "$argopt" opt; do
         y) confirmed=1;;
         W) watch=true ;;
         w) wrap="$OPTARG" ;;
-        T) threads=1; fpid='spid'; PS_OPTION+=(-T) ;;
+        T) fpid='spid'; PS_OPTION+=(-T) ;;
         k) sig=15 ;;
         K) sig=9 ;;
         p) pids=( "$OPTARG" );popt=1 ;;
@@ -369,7 +368,7 @@ case "$wrap" in
     n|no) dowrap=false ;;
     *) [ -t 1 ] && dowrap=true || dowrap=false ;;
 esac
-if [ "$threads" ] ;then
+if [ "$fpid" = 'spid' ] ;then
     if [ "$popt" ];then
         pids=( $(ps -T -p "${pids[@]}" -o spid=) )
     else
