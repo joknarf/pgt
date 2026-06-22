@@ -276,7 +276,7 @@ print_tree() {
 kill_with_children() {
     # kill processes and children with signal
     local killpids
-    _print_tree "${top_parents[*]}" "$show_parents" " "
+    _print_tree "${top_parents[*]}" "0" " "
     [ "$selected_pids" ] || return 0
     for ((i=${#selected_pids[@]}-1;i>=0;i--));do
         killpids+=("${selected_pids[i]}")
