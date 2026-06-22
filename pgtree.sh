@@ -335,6 +335,7 @@ color='auto'
 wrap='auto'
 show_parents=1
 sig=
+set -- $PGTREE "$@"
 while getopts "$argopt" opt; do
     case $opt in
         h) usage;;
