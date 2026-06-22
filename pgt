@@ -1,6 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
-#!/usr/bin/env -S awk -f ${_} -- <= -S non POSIX
 # coding: utf-8
 #
 # Program for showing the hierarchy of specific processes on a Unix computer.
@@ -13,7 +12,7 @@
 #
 
 # __author__ = "Franck Jouvanceau"
-# __copyright__ = "Copyright 2020, Franck Jouvanceau"
+# __copyright__ = "Copyright 2026, Franck Jouvanceau"
 # __license__ = "MIT"
 
 usage() {
