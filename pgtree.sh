@@ -377,7 +377,7 @@ if [ "$fpid" = 'spid' ] ;then
 else
     [ "$pgrep_args" ] && pids=( $($PGT_PGREP "${pgrep_args[@]}") )
 fi
-$dowrap && printf "\x1b[?7l"  # rmam
+$dowrap && printf "\x1b[?7l" && trap 'printf "\x1b[?7h"' EXIT  # rmam/smam
 $watch && for ((i=0;i<${#args[@]};i++)); do
     [ "${args[i]}" = -W ] && unset "args[$i]" 
     [[ ${args[i]} = -*W* ]] && args[$i]=${args[i]//W/}
@@ -389,4 +389,3 @@ while $watch; do
     sleep 2
 done
 pgt
-$dowrap && printf "\x1b[?7h"  # smam
