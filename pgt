@@ -231,9 +231,9 @@ print_proc() {
     }
     [ "$print_it" = 1 ] && {
         selected_pids+=($pid)
-        if [ "$pre" = " " ] ;then  # head of hierarchy
-            curr_p=" "
-            next_p=" "
+        if [ "$pre" = ' ' ] ;then  # head of hierarchy
+            curr_p=' '
+            next_p=' '
         elif [ "$last" ] ;then  # last child
             curr_p="$lastchild"
             next_p="  "
@@ -249,14 +249,13 @@ print_proc() {
         printf "\n"
     }
     ret["next_p"]="$next_p"
-    set +vx
     return $print_it
 }
 
 # recursive
 _print_tree(){
     # display wonderful process tree
-    local pids="$1" print_it="$2" pre="$3"  pid next_print_it nextp last pt
+    local pids="$1" print_it="$2" pre="$3"  pid next_print_it next_p last pt
     for pid in $pids;do
         [ "$pid" = "${pids##* }" ] && last=1
         print_proc "$pid" "$pre" "$print_it" "$last"
