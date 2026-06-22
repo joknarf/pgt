@@ -91,6 +91,7 @@ treedisplay () {
         colors["start"]="14m"
         colors["time"]="14m"
         colors["args"]="15m"
+        colors["%cpu"]="9m"
         colors["default"]="13m"
     }
 }
