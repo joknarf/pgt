@@ -2,7 +2,7 @@
 [![Licence](https://img.shields.io/badge/licence-MIT-blue.svg)](https://shields.io/)
 
 # pgtree
-Unix process hierachy tree display for specific processes (kind of mixed pgrep + pstree)
+Unix process hierachy tree display for specific processes (kind of mixed pgrep + pstree)  
 Same features as [joknarf/pgtree](https://github.com/joknarf/pgtree) but most portable, as no python needed, pure bash implementation
 
 ## pre-requisites
