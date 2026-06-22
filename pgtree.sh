@@ -384,7 +384,7 @@ $watch && for ((i=0;i<${#args[@]};i++)); do
 done
 while $watch; do
     clear
-    echo "$(date): Watching : pgtree ${args[*]}"
+    echo "Every 2.0s: pgtree ${args[*]}    $(date)"
     $0 "${args[@]}"
     sleep 2
 done
