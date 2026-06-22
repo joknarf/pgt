@@ -90,6 +90,7 @@ treedisplay () {
         colors["fname"]="10m"
         colors["stime"]="14m"
         colors["start"]="14m"
+        colors["time"]="14m"
         colors["args"]="15m"
         colors["default"]="13m"
     }
@@ -280,9 +281,9 @@ kill_with_children() {
     for ((i=${#selected_pids[@]}-1;i>=0;i--));do
         killpids+=("${selected_pids[i]}")
     done
-    printf "kill ${killpids[*]}"
+    printf "kill ${killpids[*]}\n"
     [ "$confirmed" ] || {
-        read -p " Confirm (y/[n]) ? " answer
+        read -p "Confirm (y/[n]) ? " answer
         [ "$answer" = "y" ] || return 0
     }
     kill -"$sig" "${killpids[@]}"
@@ -356,11 +357,13 @@ while getopts "$argopt" opt; do
         O) eval 'xfields=('${OPTARG//,/ }')' ;;
         1) pids=(1) ;;
         R) PGT_PGREP='_pgrep' ;;
-        [fxvino]) pgrep_args+=("-$opt") ;;
-        [uUgGPstF]) pgrep_args+=("-$opt" "$OPTARG") ;;
+        [fxvinoA]) pgrep_args+=("-$opt") ;;
+        [uUgGPstFOr]) pgrep_args+=("-$opt" "$OPTARG") ;;
         *) pgrep_args+=("$opt") ;;
     esac
 done
+shift $((OPTIND - 1)); unset OPTIND
+pgrep_args+=("$@")
 case "$color" in
     y|yes|always) use_color=1;;
     n|no|never) use_color="" ;;
@@ -371,8 +374,6 @@ case "$wrap" in
     n|no) dowrap=false ;;
     *) [ -t 1 ] && dowrap=true || dowrap=false ;;
 esac
-shift $((OPTIND - 1)); unset OPTIND
-pgrep_args+=("$@")
 if [ "$threads" ] ;then
     if [ "$popt" ];then
         pids=( $(ps -T -p "${pids[@]}" -o spid=) )
