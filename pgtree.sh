@@ -55,7 +55,7 @@ ps -p $$ -o ucomm >/dev/null 2>&1 && fcomm=ucomm
     [ ! "$fstime" ] && fstime=time
 }
 # busybox no -p option
-[ ! "$fcomm" ] && ! ps -p $$ >/dev/null 2>&1 && fcomm=comm && fstime=time
+[ ! "$fcomm" ] && ! ps -p $$ >/dev/null 2>&1 && fcomm=comm && fstime=etime
 
 SYSTEM=$(uname -s 2>/dev/null || echo "Linux")
 PS_OPTION=(ax)
@@ -81,25 +81,20 @@ treedisplay () {
     [ "$use_color" ] && {
         COLOR_FG="\e[38;5;"
         COLOR_RESET="\e[0m"
-        colors["pid"]="12m"
-        colors["user"]="11m"
-        colors["uid"]="11m"
-        colors["comm"]="10m"
-        colors["ucomm"]="10m"
-        colors["fname"]="10m"
-        colors["stime"]="14m"
-        colors["start"]="14m"
-        colors["time"]="14m"
-        colors["args"]="15m"
-        colors["%cpu"]="9m"
-        colors["default"]="13m"
+        col["pid"]="12m"
+        col[$fuser]="11m"
+        col[$fcomm]="10m"
+        col[$fstime]="14m"
+        col["args"]="15m"
+        col["%cpu"]="9m"
+        col["default"]="13m"
     }
 }
 
 colorize() {
     local field="$1" value="$2"
-    [ ! "${colors[$field]}" ] && printf "$COLOR_FG${colors["default"]}%s " "$value" || \
-    printf "$COLOR_FG${colors[$field]}%s$COLOR_RESET " "$value"
+    [ ! "${col[$field]}" ] && printf "$COLOR_FG${col["default"]}%s " "$value" || \
+    printf "$COLOR_FG${col[$field]}%s$COLOR_RESET " "$value"
 }
 
 proctree() {
@@ -288,7 +283,7 @@ kill_with_children() {
 
 main() {
     selected_pids=() all_pids=() top_parents=()
-    declare -A pinfo=() ps_info=() colors=()
+    declare -A pinfo=() ps_info=() col=()
     proctree
     print_tree
 }
