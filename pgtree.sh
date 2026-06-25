@@ -312,7 +312,7 @@ _pgrep() {
     w=${w// /-}
     PS_OPTION+=( -o "$fpid=$w" -o "$psfield")
     ps "${PS_OPTION[@]}" | while IFS= read -r line;do
-        pid=${line:0:19};pid=${pid// /}
+        pid=${line:0:20};pid=${pid// /}
         info=${line:21};info=${info//% /}
         [[ $info =~ $re ]] && echo "$pid"
     done
@@ -341,7 +341,7 @@ while getopts "$argopt" opt; do
         y) confirmed=1;;
         W) watch=true ;;
         w) wrap="$OPTARG" ;;
-        T) [ "$fstime" != 'etime' ] && fpid='spid'; PS_OPTION+=(-T) ;;
+        T) [ "$fstime" = 'etime' ] && PGT_PGREP='_pgrep' || fpid='spid'; PS_OPTION+=(-T) ;;
         k) sig=15 ;;
         K) sig=9 ;;
         p) pids=( "$OPTARG" );popt=1 ;;
