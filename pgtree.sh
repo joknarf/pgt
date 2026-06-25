@@ -341,7 +341,7 @@ while getopts "$argopt" opt; do
         y) confirmed=1;;
         W) watch=true ;;
         w) wrap="$OPTARG" ;;
-        T) fpid='spid'; PS_OPTION+=(-T) ;;
+        T) [ "$fstime" != 'etime' ] && fpid='spid'; PS_OPTION+=(-T) ;;
         k) sig=15 ;;
         K) sig=9 ;;
         p) pids=( "$OPTARG" );popt=1 ;;
