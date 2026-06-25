@@ -140,7 +140,7 @@ get_psinfo() {
         }
         PS_OPTION+=( -o "${fields[i]}$fmt" )
     done
-    ps_out=$(ps "${PS_OPTION[@]}")
+    ps_out=$(COLUMNS=130000 ps "${PS_OPTION[@]}")
     fields[0]="pid"
     for i in "${fields[@]}";do 
         ps_info["0,$i"]=" $i "
